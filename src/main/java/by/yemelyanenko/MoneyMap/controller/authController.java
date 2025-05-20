@@ -14,5 +14,5 @@ public class authController {
     public User registerUser(){
         return null;
     }
-    
+
 }
