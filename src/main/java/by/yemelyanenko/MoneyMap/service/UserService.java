@@ -13,6 +13,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private static final String USER_ALREADY_EXISTS_MSG = "Пользователь с именем: %s  уже существует.";
 
     @Autowired
     public UserService(UserRepository userRepository, UserMapper userMapper) {
@@ -30,7 +31,7 @@ public class UserService {
     //todo make validation when username is null
     private void validateUserByUsername(String username){
         if(userRepository.existsByUsername(username)){
-            throw new UserAlreadyExistsException("Пользователь с именем: " + username + " уже существует.");
+            throw new UserAlreadyExistsException(String.format(USER_ALREADY_EXISTS_MSG,username));
         };
     }
 }
