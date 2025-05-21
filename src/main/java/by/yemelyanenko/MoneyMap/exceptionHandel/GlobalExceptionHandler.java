@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
                 new ErrorResponse(
                         LocalDate.now(),
                         HttpStatus.CONFLICT,
-                        "Пользователь с таким именем уже существует."
+                        exception.getMessage()
                 )
         );
     }
