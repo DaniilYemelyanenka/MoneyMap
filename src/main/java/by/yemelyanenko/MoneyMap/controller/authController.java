@@ -2,8 +2,11 @@ package by.yemelyanenko.MoneyMap.controller;
 
 
 import by.yemelyanenko.MoneyMap.DTO.UserDTO;
+import by.yemelyanenko.MoneyMap.response.ApiResponse;
 import by.yemelyanenko.MoneyMap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +20,9 @@ public class authController {
     private UserService userService;
 
     @PostMapping("/register")
-    public void registerUser(@RequestBody UserDTO userDTO){
-        userService.registerUser(userDTO);
+    public ResponseEntity<ApiResponse<UserDTO>> registerUser(@RequestBody UserDTO userDTO){
+        UserDTO user = userService.registerUser(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<UserDTO>(true,userDTO));
     }
 
 }
