@@ -16,6 +16,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> catchUserAlreadyExists(UserAlreadyExistsException userAlreadyExistsException){
+        log.error(userAlreadyExistsException.getMessage(),userAlreadyExistsException);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(
                 new ErrorResponse(
                         LocalDate.now(),

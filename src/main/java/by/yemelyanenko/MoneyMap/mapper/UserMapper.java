@@ -11,11 +11,12 @@ import java.util.List;
 @Mapper(config = BaseMapper.class)
 public interface UserMapper{
 
-    @Mapping( target = "isActive", constant = "true")
-    @Mapping (target = "role", expression = "java(by.yemelyanenko.MoneyMap.enums.UserRole.USER)")
-    @Mapping (target = "createdAt", expression = "java(java.time.LocalDate.now())")
+
     UserDTO toDto (User user);
 
+    @Mapping( target = "active", constant = "true")
+    @Mapping (target = "role", expression = "java(by.yemelyanenko.MoneyMap.enums.UserRole.USER)")
+    @Mapping (target = "createdAt", expression = "java(java.time.LocalDate.now())")
     User toEntity(UserDTO userDTO);
 
     List<UserDTO> toDtos(Iterable<User> list);
