@@ -4,6 +4,7 @@ package by.yemelyanenko.MoneyMap.controller;
 import by.yemelyanenko.MoneyMap.DTO.UserDTO;
 import by.yemelyanenko.MoneyMap.response.ApiResponse;
 import by.yemelyanenko.MoneyMap.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class authController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserDTO>> registerUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<ApiResponse<UserDTO>> registerUser(@Valid @RequestBody UserDTO userDTO){
         UserDTO user = userService.registerUser(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<UserDTO>(true,userDTO));
     }

@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+//todo make builder for api response
 public class ApiResponse<T> {
 
     private boolean success;
