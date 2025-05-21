@@ -1,4 +1,4 @@
-package by.yemelyanenko.MoneyMap.Enum;
+package by.yemelyanenko.MoneyMap.enums;
 
 public enum UserRole {
     ADMIN,

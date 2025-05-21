@@ -1,18 +1,20 @@
 package by.yemelyanenko.MoneyMap.entity;
 
-import by.yemelyanenko.MoneyMap.Enum.UserRole;
+import by.yemelyanenko.MoneyMap.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "mm_user")
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
+@ToString
 public class User {
 
     @Id

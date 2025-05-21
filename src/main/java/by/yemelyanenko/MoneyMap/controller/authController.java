@@ -18,7 +18,7 @@ public class authController {
 
     @PostMapping("/register")
     public void registerUser(@RequestBody UserDTO userDTO){
-
+        userService.registerUser(userDTO);
     }
 
 }
