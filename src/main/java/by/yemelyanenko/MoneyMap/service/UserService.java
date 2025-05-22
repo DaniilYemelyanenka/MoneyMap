@@ -3,6 +3,7 @@ package by.yemelyanenko.MoneyMap.service;
 import by.yemelyanenko.MoneyMap.DTO.UserDTO;
 import by.yemelyanenko.MoneyMap.entity.User;
 import by.yemelyanenko.MoneyMap.exception.UserAlreadyExistsException;
+import by.yemelyanenko.MoneyMap.exception.UserNotFoundException;
 import by.yemelyanenko.MoneyMap.mapper.UserMapper;
 import by.yemelyanenko.MoneyMap.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,14 @@ public class UserService {
     private final UserMapper userMapper;
 
     private static final String USER_ALREADY_EXISTS_MSG = "Пользователь с именем: %s  уже существует.";
+
+    private static final String USER_NOT_FOUND_MESSAGE = "Пользователь с именем: %S не найден";
+
+    public UserDTO loginUser(String username, String password){
+        return userMapper.toDto(userRepository.findByUsername(username)
+                .orElseThrow(
+                        () -> new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE,username))));
+    }
 
     public UserDTO registerUser(UserDTO userDTO){
         validateUserByUsername(userDTO.getUsername());

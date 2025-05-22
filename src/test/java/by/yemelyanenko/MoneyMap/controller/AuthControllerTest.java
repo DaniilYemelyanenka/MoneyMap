@@ -1,8 +1,10 @@
 package by.yemelyanenko.MoneyMap.controller;
 
 
+import by.yemelyanenko.MoneyMap.DTO.LoginDTO;
 import by.yemelyanenko.MoneyMap.DTO.UserDTO;
 import by.yemelyanenko.MoneyMap.exception.UserAlreadyExistsException;
+import by.yemelyanenko.MoneyMap.exception.UserNotFoundException;
 import by.yemelyanenko.MoneyMap.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -44,7 +46,13 @@ public class AuthControllerTest {
         return user;
     }
 
-    public ResultActions postRequest(UserDTO user) throws Exception{
+    private ResultActions postLoginRequest(LoginDTO loginDTO) throws Exception{
+        return mockMvc.perform(post("/api/v1/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(loginDTO)));
+    }
+
+    private ResultActions postRegisterRequest(UserDTO user) throws Exception{
         return mockMvc.perform(post("/api/v1/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)));
@@ -54,11 +62,9 @@ public class AuthControllerTest {
     public void registerUser_WhenInputValid() throws Exception {
         UserDTO user = createValidUser();
 
-        when(userService.registerUser(user)).thenReturn(user);
+        when(userService.registerUser(any(UserDTO.class))).thenReturn(user);
 
-        mockMvc.perform(post("/api/v1/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user)))
+        postRegisterRequest(user)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.username").value("ivan1"))
@@ -71,7 +77,7 @@ public class AuthControllerTest {
 
         user.setUsername("ivan1%");
 
-        postRequest(user)
+        postRegisterRequest(user)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message")
                         .value("username: может содержать только буквы латинского алфавита, цифры и нижнее подчеркивание"));
@@ -84,8 +90,41 @@ public class AuthControllerTest {
         given(userService.registerUser(any(UserDTO.class)))
                 .willThrow(new UserAlreadyExistsException("Пользователь с таким именем уже существует."));
 
-        postRequest(user)
+        postRegisterRequest(user)
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value("Пользователь с таким именем уже существует."));
+    }
+
+
+    //todo refactor creating loginDTO object
+    @Test
+    public void loginUser_WhenInputValid() throws Exception {
+
+        LoginDTO loginDTO =  new LoginDTO();
+        loginDTO.setUsername("ivan1");
+        loginDTO.setPassword("ivan11");
+
+        when(userService.loginUser(loginDTO.getUsername(),loginDTO.getPassword()))
+                .thenReturn(createValidUser());
+
+        postLoginRequest(loginDTO)
+                .andExpect(status().isFound())
+                .andExpect( jsonPath("$.data.username").value("ivan1"))
+                .andExpect(jsonPath("$.data.email").value("ivan@example.com"));
+    }
+
+    @Test
+    public void loginUser_WhenUserNotExists()  throws Exception{
+
+        LoginDTO loginDTO =  new LoginDTO();
+        loginDTO.setUsername("ivan1");
+        loginDTO.setPassword("ivan11");
+
+        when(userService.loginUser(loginDTO.getUsername(), loginDTO.getPassword()))
+                .thenThrow(new UserNotFoundException("Пользователь с таким именем не найден"));
+
+        postLoginRequest(loginDTO)
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Пользователь с таким именем не найден"));
     }
 }

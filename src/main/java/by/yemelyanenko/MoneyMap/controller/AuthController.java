@@ -1,6 +1,7 @@
 package by.yemelyanenko.MoneyMap.controller;
 
 
+import by.yemelyanenko.MoneyMap.DTO.LoginDTO;
 import by.yemelyanenko.MoneyMap.DTO.UserDTO;
 import by.yemelyanenko.MoneyMap.response.ApiResponse;
 import by.yemelyanenko.MoneyMap.service.UserService;
@@ -23,7 +24,16 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserDTO>> registerUser(@Valid @RequestBody UserDTO userDTO){
         UserDTO user = userService.registerUser(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<UserDTO>(true,userDTO));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new ApiResponse<UserDTO>(true,user));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<UserDTO>> loginUser(@Valid @RequestBody LoginDTO loginDTO){
+        UserDTO user = userService.loginUser(loginDTO.getUsername(), loginDTO.getPassword());
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .body(new ApiResponse<UserDTO>(true,user));
+    }
 }

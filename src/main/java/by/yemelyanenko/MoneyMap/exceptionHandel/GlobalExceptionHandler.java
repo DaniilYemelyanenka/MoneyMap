@@ -1,6 +1,7 @@
 package by.yemelyanenko.MoneyMap.exceptionHandel;
 
 import by.yemelyanenko.MoneyMap.exception.UserAlreadyExistsException;
+import by.yemelyanenko.MoneyMap.exception.UserNotFoundException;
 import by.yemelyanenko.MoneyMap.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> catchUserAlreadyExists(UserAlreadyExistsException exception){
         log.error(exception.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                new ErrorResponse(
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(
                         LocalDate.now(),
                         HttpStatus.CONFLICT,
-                        exception.getMessage()
-                )
+                        exception.getMessage())
         );
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> catchUserNotFound(UserNotFoundException exception){
+        log.error(exception.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(
+                        LocalDate.now(),
+                        HttpStatus.NOT_FOUND,
+                        exception.getMessage()
+                ));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
