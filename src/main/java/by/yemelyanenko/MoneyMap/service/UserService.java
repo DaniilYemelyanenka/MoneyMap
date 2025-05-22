@@ -19,16 +19,12 @@ public class UserService {
 
     private static final String USER_ALREADY_EXISTS_MSG = "Пользователь с именем: %s  уже существует.";
 
-
-
     public UserDTO registerUser(UserDTO userDTO){
         validateUserByUsername(userDTO.getUsername());
         User user = userRepository.save(userMapper.toEntity(userDTO));
         return userMapper.toDto(user);
     }
 
-    //todo Maybe make class for validations
-    //todo make validation when username is null
     private void validateUserByUsername(String username){
         if(userRepository.existsByUsername(username)){
             throw new UserAlreadyExistsException(String.format(USER_ALREADY_EXISTS_MSG,username));
