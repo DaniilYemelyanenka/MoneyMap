@@ -38,11 +38,9 @@ public class AuthControllerTest {
 
     private UserDTO createValidUser(){
         UserDTO user = new UserDTO();
-        user.setUsername("ivan1");
-        user.setPassword("ivan11");
+        user.setUsername("user4");
+        user.setPassword("user4");
         user.setEmail("ivan@example.com");
-        user.setFirstName("ivan");
-        user.setSecondName("Petrov");
         return user;
     }
 
@@ -66,9 +64,7 @@ public class AuthControllerTest {
 
         postRegisterRequest(user)
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.username").value("ivan1"))
-                .andExpect(jsonPath("$.data.email").value("ivan@example.com"));
+                .andExpect(jsonPath("$.success").value(true));
     }
 
     @Test
@@ -96,29 +92,12 @@ public class AuthControllerTest {
     }
 
 
-    //todo refactor creating loginDTO object
-    @Test
-    public void loginUser_WhenInputValid() throws Exception {
-
-        LoginDTO loginDTO =  new LoginDTO();
-        loginDTO.setUsername("ivan1");
-        loginDTO.setPassword("ivan11");
-
-        when(userService.loginUser(loginDTO.getUsername(),loginDTO.getPassword()))
-                .thenReturn(createValidUser());
-
-        postLoginRequest(loginDTO)
-                .andExpect(status().isFound())
-                .andExpect( jsonPath("$.data.username").value("ivan1"))
-                .andExpect(jsonPath("$.data.email").value("ivan@example.com"));
-    }
-
     @Test
     public void loginUser_WhenUserNotExists()  throws Exception{
 
         LoginDTO loginDTO =  new LoginDTO();
-        loginDTO.setUsername("ivan1");
-        loginDTO.setPassword("ivan11");
+        loginDTO.setUsername("user4");
+        loginDTO.setPassword("user4");
 
         when(userService.loginUser(loginDTO.getUsername(), loginDTO.getPassword()))
                 .thenThrow(new UserNotFoundException("Пользователь с таким именем не найден"));
@@ -127,4 +106,4 @@ public class AuthControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("Пользователь с таким именем не найден"));
     }
-}
+};

@@ -7,16 +7,21 @@ import by.yemelyanenko.MoneyMap.exception.UserNotFoundException;
 import by.yemelyanenko.MoneyMap.mapper.UserMapper;
 import by.yemelyanenko.MoneyMap.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
-@AllArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    private final UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     private static final String USER_ALREADY_EXISTS_MSG = "Пользователь с именем: %s  уже существует.";
 
@@ -30,6 +35,7 @@ public class UserService {
 
     public UserDTO registerUser(UserDTO userDTO){
         validateUserByUsername(userDTO.getUsername());
+        userDTO.setPassword(encoder.encode(userDTO.getPassword()));
         User user = userRepository.save(userMapper.toEntity(userDTO));
         return userMapper.toDto(user);
     }
