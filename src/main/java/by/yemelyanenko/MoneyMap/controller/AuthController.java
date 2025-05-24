@@ -33,7 +33,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<UserDTO>> loginUser(@Valid @RequestBody LoginDTO loginDTO){
         UserDTO user = userService.loginUser(loginDTO.getUsername(), loginDTO.getPassword());
         return ResponseEntity
-                .status(HttpStatus.FOUND)
+                .status(HttpStatus.OK)
                 .body(new ApiResponse<UserDTO>(true,user));
     }
 }

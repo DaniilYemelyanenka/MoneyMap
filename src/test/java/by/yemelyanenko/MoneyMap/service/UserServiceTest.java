@@ -1,5 +1,6 @@
 package by.yemelyanenko.MoneyMap.service;
 
+import by.yemelyanenko.MoneyMap.DTO.LoginDTO;
 import by.yemelyanenko.MoneyMap.DTO.UserDTO;
 import by.yemelyanenko.MoneyMap.entity.User;
 import by.yemelyanenko.MoneyMap.exception.UserAlreadyExistsException;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -63,4 +66,25 @@ public class UserServiceTest {
         verify(userRepository).save(user);
     }
 
+
+    @Test
+    public void loginUserTest_success(){
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setUsername("ivan1");
+        loginDTO.setPassword("ivan11");
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("ivan1");
+
+        User user = new User();
+        user.setUsername("ivan1");
+
+        when(userRepository.findByUsername(loginDTO.getUsername())).thenReturn(Optional.of(user));
+        when(userMapper.toDto(user)).thenReturn(userDTO);
+
+        Assertions.assertEquals("ivan1",
+                userService.loginUser(loginDTO.getUsername(), loginDTO.getPassword()).getUsername());
+
+        verify(userRepository).findByUsername(loginDTO.getUsername());
+    }
 }
