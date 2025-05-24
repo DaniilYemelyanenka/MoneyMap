@@ -30,7 +30,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody UserDTO userDTO){
+    public ResponseEntity<ApiResponse<String>> registerUser(@Valid @RequestBody UserDTO userDTO){
         UserDTO user = userService.registerUser(userDTO);
 
         Authentication auth = authenticationManager
@@ -53,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<ApiResponse<String>> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
         UserDTO user = userService.loginUser(loginDTO.getUsername(), loginDTO.getPassword());
 
         Authentication auth = authenticationManager

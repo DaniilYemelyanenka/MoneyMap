@@ -6,15 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 //todo make builder for api response
-public class ApiResponse {
+public class ApiResponse<T>{
 
     private boolean success;
 
-    private String data;
+    private T data;
 
-    public ApiResponse(boolean success,String string) {
-        this.success = success;
-        this.data = string;
-    }
 }
