@@ -44,7 +44,7 @@ public class AuthController {
             token = jwtService.generateToken(user.getUsername());
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(new ApiResponse(true,token));
+                    .body(new ApiResponse(true, token));
         }
         else {
             throw new UserNotFoundException(String.format("Пользователь с именем: %s не найден",user.getUsername()));

@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "mm_user")
@@ -40,5 +41,8 @@ public class User {
     private LocalDate createdAt;
 
     private boolean isActive;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private List<Transaction> transactions;
 
 }
