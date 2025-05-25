@@ -2,7 +2,6 @@ package by.yemelyanenko.MoneyMap.entity;
 
 import by.yemelyanenko.MoneyMap.enums.TransactionType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +19,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private double amount;
 
     private TransactionType transactionType;
@@ -42,4 +40,5 @@ public class Transaction {
         this.description = description;
         this.user = user;
     }
+
 }

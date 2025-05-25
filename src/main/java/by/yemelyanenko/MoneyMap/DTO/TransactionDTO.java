@@ -1,6 +1,8 @@
 package by.yemelyanenko.MoneyMap.DTO;
 
 import by.yemelyanenko.MoneyMap.enums.TransactionType;
+import by.yemelyanenko.MoneyMap.enums.ValidationConstants;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class TransactionDTO {
 
+
+    @NotNull(message = ValidationConstants.NOT_BLANC_MESSAGE)
     private double amount;
 
     private TransactionType transactionType;
@@ -23,4 +27,6 @@ public class TransactionDTO {
     private LocalDate date;
 
     private String description;
+
+
 }
