@@ -20,8 +20,10 @@ public class CategoryController {
     @GetMapping("/categories")
     public ResponseEntity<ApiResponse<List<CategoryDTO>>> getCategories(){
 
+        List<CategoryDTO> categoryDTOList = categoryService.getAllCategories();
+
         return ResponseEntity
                 .status(HttpStatus.FOUND)
-                .body(new ApiResponse<>(true,categoryService.getAllCategories()));
+                .body(new ApiResponse<>(true,categoryDTOList));
     }
 }

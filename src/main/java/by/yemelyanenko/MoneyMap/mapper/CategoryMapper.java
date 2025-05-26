@@ -4,7 +4,6 @@ package by.yemelyanenko.MoneyMap.mapper;
 import by.yemelyanenko.MoneyMap.DTO.CategoryDTO;
 import by.yemelyanenko.MoneyMap.entity.Category;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;

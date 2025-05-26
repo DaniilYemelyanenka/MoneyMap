@@ -1,19 +1,15 @@
 package by.yemelyanenko.MoneyMap.DTO;
 
 import by.yemelyanenko.MoneyMap.enums.TransactionType;
-import by.yemelyanenko.MoneyMap.enums.ValidationConstants;
+import by.yemelyanenko.MoneyMap.constants.ValidationConstants;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class TransactionDTO {
 
 

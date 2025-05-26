@@ -1,6 +1,6 @@
 package by.yemelyanenko.MoneyMap.DTO;
 
-import by.yemelyanenko.MoneyMap.enums.ValidationConstants;
+import by.yemelyanenko.MoneyMap.constants.ValidationConstants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

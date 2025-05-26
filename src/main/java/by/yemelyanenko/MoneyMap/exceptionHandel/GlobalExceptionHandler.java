@@ -1,5 +1,6 @@
 package by.yemelyanenko.MoneyMap.exceptionHandel;
 
+import by.yemelyanenko.MoneyMap.exception.CategoryNotFoundException;
 import by.yemelyanenko.MoneyMap.exception.UserAlreadyExistsException;
 import by.yemelyanenko.MoneyMap.exception.UserNotFoundException;
 import by.yemelyanenko.MoneyMap.response.ErrorResponse;
@@ -17,6 +18,17 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ErrorResponse> catchNoSuchCategoryException(CategoryNotFoundException exception){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body( new ErrorResponse(
+                        LocalDate.now(),
+                        HttpStatus.NOT_FOUND,
+                        exception.getMessage()
+                ));
+    }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> catchUserAlreadyExists(UserAlreadyExistsException exception){

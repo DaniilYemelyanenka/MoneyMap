@@ -1,6 +1,6 @@
 package by.yemelyanenko.MoneyMap.DTO;
 
-import by.yemelyanenko.MoneyMap.enums.ValidationConstants;
+import by.yemelyanenko.MoneyMap.constants.ValidationConstants;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,13 +30,4 @@ public class UserDTO {
 
     private String secondName;
 
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                '}';
-    }
 }

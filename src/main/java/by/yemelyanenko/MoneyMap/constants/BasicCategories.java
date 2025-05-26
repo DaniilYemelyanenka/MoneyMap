@@ -1,5 +1,7 @@
-package by.yemelyanenko.MoneyMap.entity;
+package by.yemelyanenko.MoneyMap.constants;
 
+import by.yemelyanenko.MoneyMap.entity.Category;
+import by.yemelyanenko.MoneyMap.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;

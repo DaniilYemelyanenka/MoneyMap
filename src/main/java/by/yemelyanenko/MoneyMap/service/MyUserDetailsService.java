@@ -1,6 +1,7 @@
 package by.yemelyanenko.MoneyMap.service;
 
 import by.yemelyanenko.MoneyMap.config.UserPrincipals;
+import by.yemelyanenko.MoneyMap.constants.MessageConstants;
 import by.yemelyanenko.MoneyMap.exception.UserNotFoundException;
 import by.yemelyanenko.MoneyMap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,9 @@ public class MyUserDetailsService implements UserDetailsService {
         return userRepository.findByUsername(username)
                 .map(UserPrincipals::new)
                 .orElseThrow(() ->
-                        new UserNotFoundException(String.format("Пользователь с именем: %s не найден",username)));
+                        new UserNotFoundException(
+                                String.format(MessageConstants.USER_NOT_FOUND_MSG,username)
+                        ));
 
     }
 }

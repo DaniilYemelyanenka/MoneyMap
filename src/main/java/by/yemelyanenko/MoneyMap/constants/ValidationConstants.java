@@ -1,4 +1,4 @@
-package by.yemelyanenko.MoneyMap.enums;
+package by.yemelyanenko.MoneyMap.constants;
 
 public class ValidationConstants {
 

@@ -22,7 +22,8 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @GetMapping("/transactions")
-    public ResponseEntity<ApiResponse<TransactionDTO>> getMapping(@AuthenticationPrincipal UserPrincipals userPrincipals){
+    public ResponseEntity<ApiResponse<TransactionDTO>> getMapping(
+                                                            @AuthenticationPrincipal UserPrincipals userPrincipals){
 
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -33,15 +33,4 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-
-
-    public Transaction(double amount, Category category, TransactionType transactionType, LocalDate date, String description, User user) {
-        this.amount = amount;
-        this.category = category;
-        this.transactionType = transactionType;
-        this.date = date;
-        this.description = description;
-        this.user = user;
-    }
-
 }
