@@ -29,9 +29,11 @@ public class UserService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    private static final String USER_ALREADY_EXISTS_MSG = "Пользователь с именем: %s  уже существует.";
 
+    //todo make class for this constants
+    private static final String USER_ALREADY_EXISTS_MSG = "Пользователь с именем: %s  уже существует.";
     private static final String USER_NOT_FOUND_MESSAGE = "Пользователь с именем: %S не найден";
+    private static final String EMAIL_ALREADY_EXISTS_MSG = "Пользователь с email: %s  уже существует.";
 
     public UserDTO loginUser(String username, String password){
         return userMapper.toDto(userRepository.findByUsername(username)
@@ -43,7 +45,8 @@ public class UserService {
     // todo add throwing exception: user with this email is already exists
     public UserDTO registerUser(UserDTO userDTO){
 
-        validateUserByUsername(userDTO.getUsername());
+        validateUserByExisting(userDTO);
+
 
         userDTO.setPassword(encoder.encode(userDTO.getPassword()));
 
@@ -56,9 +59,22 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
+
+    //todo maybe make own class for this validating
+    private void validateUserByExisting(UserDTO userDTO){
+        validateUserByUsername(userDTO.getUsername());
+        validateUserByEmail(userDTO.getEmail());
+    }
+
     private void validateUserByUsername(String username){
         if(userRepository.existsByUsername(username)){
             throw new UserAlreadyExistsException(String.format(USER_ALREADY_EXISTS_MSG,username));
+        };
+    }
+
+    private void validateUserByEmail(String email){
+        if(userRepository.existsByEmail(email)){
+            throw new UserAlreadyExistsException(String.format(EMAIL_ALREADY_EXISTS_MSG,email));
         };
     }
 }
