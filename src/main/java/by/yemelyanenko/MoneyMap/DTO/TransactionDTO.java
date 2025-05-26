@@ -1,5 +1,6 @@
 package by.yemelyanenko.MoneyMap.DTO;
 
+import by.yemelyanenko.MoneyMap.entity.Category;
 import by.yemelyanenko.MoneyMap.enums.TransactionType;
 import by.yemelyanenko.MoneyMap.enums.ValidationConstants;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +23,7 @@ public class TransactionDTO {
 
     private TransactionType transactionType;
 
-    private String category;
+    private Category category;
 
     private LocalDate date;
 

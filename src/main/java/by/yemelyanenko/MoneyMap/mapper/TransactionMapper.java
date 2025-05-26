@@ -5,7 +5,6 @@ import by.yemelyanenko.MoneyMap.DTO.TransactionDTO;
 import by.yemelyanenko.MoneyMap.entity.Transaction;
 import org.mapstruct.Mapper;
 
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
