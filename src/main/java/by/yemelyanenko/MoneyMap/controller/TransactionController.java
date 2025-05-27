@@ -3,6 +3,7 @@ package by.yemelyanenko.MoneyMap.controller;
 
 import by.yemelyanenko.MoneyMap.DTO.TransactionDTO;
 import by.yemelyanenko.MoneyMap.config.UserPrincipals;
+import by.yemelyanenko.MoneyMap.repository.specification.TransactionFilter;
 import by.yemelyanenko.MoneyMap.response.ApiResponse;
 import by.yemelyanenko.MoneyMap.service.TransactionService;
 import jakarta.validation.Valid;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class TransactionController {
 
@@ -22,12 +25,15 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @GetMapping("/transactions")
-    public ResponseEntity<ApiResponse<TransactionDTO>> getMapping(
-                                                            @AuthenticationPrincipal UserPrincipals userPrincipals){
+    public ResponseEntity<ApiResponse<List<TransactionDTO>>> getMapping(
+                                                            @AuthenticationPrincipal UserPrincipals userPrincipals,
+                                                            TransactionFilter transactionFilter){
+
+        List<TransactionDTO> transactionDTOList = transactionService.getAllTransaction(transactionFilter,userPrincipals.getUsername());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ApiResponse(true, null));
+                .body(new ApiResponse(true, transactionDTOList));
     }
 
     @PostMapping("/transaction")
